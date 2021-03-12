@@ -5,14 +5,12 @@ import java.util.Map;
 
 public class Tester {
     public static void main(String[] args) {
-        System.out.println("Hello Eric");
-        HTInternalNode node = new HTInternalNode();
-        char firstChar;
+        HT tree = new HT();
         String value = "eebbeecdebeeebecceeeddebbbeceedebeeddeeeecceeeedeeedeeebeedeceedebeeedeceeedebee";
 
-        System.out.println(value.getBytes().length);
-        firstChar = value.toCharArray()[0];
+//        System.out.println(value.getBytes().length);
 
+//        tree.encode();
     }
 }
 

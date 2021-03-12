@@ -1,7 +1,7 @@
-class Node {
-    Character ch;
-    Integer freq;
-    Node left = null, right = null;
+class Node implements Comparable{
+    private Character ch;
+    private Integer freq;
+    private Node left = null, right = null;
 
     public Node(Character ch, Integer freq) {
         this.ch = ch;
@@ -13,6 +13,10 @@ class Node {
         this.freq = freq;
         this.left = left;
         this.right = right;
+    }
+
+    public Node(Integer freq) {
+        this.freq = freq;
     }
 
     public Character getValue() {
@@ -31,11 +35,34 @@ class Node {
         this.freq = frequency;
     }
 
+    public Node getLeft() {
+        return left;
+    }
+
+    public void setLeft(Node newNode) {
+        left = newNode;
+    }
+
+    public Node getRight() {
+        return right;
+    }
+
+    public void setRight(Node newNode) {
+        right = newNode;
+    }
+
     // function to check if Huffman Tree contains only a single node
     public boolean isLeaf() {
         return this.left == null && this.right == null;
     }
 
+
+    @Override
+    public int compareTo(Object o) {
+        Node newNode = (Node) o;
+
+        return freq - newNode.getFrequency();
+    }
 }
 
 
