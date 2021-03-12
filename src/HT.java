@@ -4,17 +4,19 @@ import java.util.*;
 
 public class HT {
     private Node root;
-//    private String relative
 
-    public HT(){
+    public HT(String sampleStream){
         root = null;
-        buildTree("eebbeecdebeeebecceeeddebbbeceedebeeddeeeecceeeedeeedeeebeedeceedebeeedeceeedebee");
+        buildTree(sampleStream);
         System.out.println(inOrder());
+
+        HashMap<Character, String> map = new HashMap<>();
+        map.put('a', sampleStream);
+        encode(root, sampleStream, map);
     }
 
 
-    //TODO: Finish
-    //Note for Eric: This isn't working so whatever you do, DO NOT touch it unless you figure it out.
+    //Creates the tree based on the sampleStream of characters given as input
     private void buildTree(String sampleStream) {
         PriorityQueue<Node> queue = new PriorityQueue<>(); //Queue that automatically sorts by frequency
         Node newNode = null;
@@ -29,20 +31,19 @@ public class HT {
             queue.add(newNode); //Add the node to the queue
         }
 
-        while (!queue.isEmpty()) {
-            Node leaf1 = queue.remove();
-            System.out.println(leaf1.getValue());
-            Node leaf2 = queue.remove();
-            System.out.println(leaf2.getValue());
-            Node parent = new Node(leaf1.getFrequency() + leaf2.getFrequency());
+        //Creates the tree
+        while (queue.size() != 1) {
+            Node leaf1 = queue.remove(); //Get the next least frequent node
+            Node leaf2 = queue.remove(); //Get the next least frequent node
+            Node parent = new Node(leaf1.getFrequency() + leaf2.getFrequency()); //Create a new node with a frequency of the combined previous nodes
 
-            parent.setLeft(leaf1);
-            parent.setRight(leaf2);
-            root = parent;
+            parent.setLeft(leaf2); //Set the left to the more frequent of the two nodes
+            parent.setRight(leaf1); //Set the right to the less frequent of the two nodes
+
+            queue.add(parent); //Add the parent node back to the tree
         }
 
-
-//        System.out.println(queue.remove().getValue());
+        root = queue.peek(); //Set the root to the only node in the queue
     }
 
     //traverses the tree and then stores the codes in a map
@@ -58,6 +59,7 @@ public class HT {
 
         encode(root.getLeft(), str + '0', huffmanCode);
         encode(root.getRight(), str + '1', huffmanCode);
+        System.out.println(str);
     }
 
 
