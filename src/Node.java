@@ -31,6 +31,11 @@ class Node {
         this.freq = frequency;
     }
 
+    // function to check if Huffman Tree contains only a single node
+    public boolean isLeaf() {
+        return this.left == null && this.right == null;
+    }
+
 }
 
 
