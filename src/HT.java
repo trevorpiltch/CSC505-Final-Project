@@ -9,10 +9,7 @@ public class HT {
         root = null;
         buildTree(sampleStream);
         System.out.println(inOrder());
-
-        HashMap<Character, String> map = new HashMap<>();
-        map.put('a', sampleStream);
-        encode(root, sampleStream, map);
+        System.out.println(compareStorage("eddbc", ""));
     }
 
 
@@ -45,6 +42,10 @@ public class HT {
 
         root = queue.peek(); //Set the root to the only node in the queue
     }
+
+//    public String encode(String value) {
+//
+//    }
 
     //traverses the tree and then stores the codes in a map
     private void encode(Node root, String str, Map<Character, String> huffmanCode) {
@@ -81,9 +82,6 @@ public class HT {
         index = decode(root, index, sb);
         return index;
     }
-
-
-
 
     //Finds the number of times the searchValue appears in the input and returns a HashMap
     //with searchValue and its respective frequency
@@ -151,5 +149,13 @@ public class HT {
             out += inOrder(rt.getRight());
             return out;
         }
+    }
+
+    public int compareStorage(String originalValue, String encodedValue) {
+        int returnData = 0;
+
+        returnData = originalValue.getBytes().length;
+
+        return returnData;
     }
 }
