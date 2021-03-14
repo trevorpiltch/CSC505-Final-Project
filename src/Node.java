@@ -1,3 +1,5 @@
+import java.util.Comparator;
+
 class Node implements Comparable{
     private Character ch;
     private Integer freq;

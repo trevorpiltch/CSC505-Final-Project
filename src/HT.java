@@ -1,6 +1,7 @@
-//import java.util;
-
+import java.lang.reflect.Array;
+import java.lang.reflect.GenericDeclaration;
 import java.util.*;
+
 
 public class HT {
     private Node root;
@@ -8,8 +9,6 @@ public class HT {
     public HT(String sampleStream){
         root = null;
         buildTree(sampleStream);
-        System.out.println(inOrder());
-        System.out.println(compareStorage("eddbc", ""));
     }
 
 
@@ -34,45 +33,90 @@ public class HT {
             Node leaf2 = queue.remove(); //Get the next least frequent node
             Node parent = new Node(leaf1.getFrequency() + leaf2.getFrequency()); //Create a new node with a frequency of the combined previous nodes
 
-            parent.setLeft(leaf2); //Set the left to the more frequent of the two nodes
-            parent.setRight(leaf1); //Set the right to the less frequent of the two nodes
+            parent.setLeft(leaf1); //Set the left to the less frequent of the two nodes
+            parent.setRight(leaf2); //Set the right to the more frequent of the two nodes
 
             queue.add(parent); //Add the parent node back to the tree
+            root = parent;
         }
 
-        root = queue.peek(); //Set the root to the only node in the queue
+//        root = queue.peek(); //Set the root to the only node in the queue
     }
 
-//    public String encode(String value) {
-//
-//    }
+    public String encode(String value) {
+        HashMap<Character, String> map = new HashMap<>();
+        return encode(root, "", map);
+    }
 
     //traverses the tree and then stores the codes in a map
-    private void encode(Node root, String str, Map<Character, String> huffmanCode) {
+    private String encode(Node root, String str, Map<Character, String> huffmanCode) {
+        String returnData = "";
+
         if (root == null) {
-            return;
+            return returnData;
         }
 
         // Found a leaf node
         if (root.isLeaf()) {
             huffmanCode.put(root.getValue(), str.length() > 0 ? str : "1");
         }
+//        returnData += huffmanCode.get(root.getValue());
 
-        encode(root.getLeft(), str + '0', huffmanCode);
+        returnData += str;
         encode(root.getRight(), str + '1', huffmanCode);
-        System.out.println(str);
+        encode(root.getLeft(), str + '0', huffmanCode);
+
+
+//        if (root.getValue() != null) {
+//            System.out.println("Encoded value of " + root.getValue() + ": " + str);
+//        }
+
+        return returnData;
     }
 
-    public static int decode(Node root, int index, StringBuilder sb)
-    {
+    public String decode(String decodeValue) {
+        char[] encodedInputAsArray = decodeValue.toCharArray();
+        ArrayList<Character> encodedInputList = new ArrayList<>();
+
+        String returnData = "";
+        Node tempNode = root;
+
+        for (char c : encodedInputAsArray) {
+            encodedInputList.add(c);
+        }
+
+        while (!encodedInputList.isEmpty()) {
+            if (encodedInputList.get(0) == '0') {
+                tempNode = tempNode.getLeft();
+                encodedInputList.remove(0);
+
+                if (tempNode.isLeaf()) {
+                    returnData += tempNode.getValue();
+                    tempNode = root;
+                }
+            }
+            else if (encodedInputList.get(0) == '1') {
+                tempNode = tempNode.getRight();
+                encodedInputList.remove(0);
+
+                if (tempNode.isLeaf()) {
+                    returnData += tempNode.getValue();
+                    tempNode = root;
+                }
+            }
+        }
+
+        return returnData;
+    }
+
+    public static int decode(Node root, int index, StringBuilder sb) {
         if (root == null) {
             return index;
         }
 
         // Found a leaf node
-        if (root.isLeaf())
-        {
-            System.out.print(root.getValue());
+        if (root.isLeaf()) {
+            System.out.print("Decoded: " + root.getValue());
             return index;
         }
 
@@ -145,7 +189,7 @@ public class HT {
         } else {
             String out = "";
             out += inOrder(rt.getLeft());
-            out += rt.getValue();
+            out += rt.getFrequency();
             out += inOrder(rt.getRight());
             return out;
         }
