@@ -62,6 +62,28 @@ public class HT {
         System.out.println(str);
     }
 
+    public static int decode(Node root, int index, StringBuilder sb)
+    {
+        if (root == null) {
+            return index;
+        }
+
+        // Found a leaf node
+        if (root.isLeaf())
+        {
+            System.out.print(root.getValue());
+            return index;
+        }
+
+        index++;
+
+        root = (sb.charAt(index) == '0') ? root.getLeft() : root.getRight();
+        index = decode(root, index, sb);
+        return index;
+    }
+
+
+
 
     //Finds the number of times the searchValue appears in the input and returns a HashMap
     //with searchValue and its respective frequency
