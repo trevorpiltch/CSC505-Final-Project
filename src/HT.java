@@ -1,22 +1,23 @@
+import java.text.DecimalFormat;
 import java.util.*;
 
 
 public class HT {
     private Node root;
 
-    public HT(String sampleStream){
-        root = null;
-        buildTree(sampleStream);
+    public HT(String value){
+        root = null; //initialize the root
+        buildTree(value); //Build the tree based on the input value
     }
 
 
-    //Creates the tree based on the sampleStream of characters given as input
-    private void buildTree(String sampleStream) {
+    //Creates the tree based on the value of characters given as input
+    private void buildTree(String valueForTree) {
         PriorityQueue<Node> queue = new PriorityQueue<>(); //Queue that automatically sorts by frequency
         Node newNode = null;
 
         //Loops through each map in findFrequencies and adds it to the priority queue
-        for (HashMap<Character, Integer> map : findFrequencies(sampleStream)) {
+        for (HashMap<Character, Integer> map : findFrequencies(valueForTree)) {
             Set<Character> keySet = map.keySet(); //Find the keys (in this case characters) in the map
             Object[] keySetArray = keySet.toArray();//Convert the ketSet to an Array so it can be indexed in the next step
 
@@ -41,7 +42,6 @@ public class HT {
 
 
     public String encode(String value) {
-
         HashMap<Character, String> huffmanCode = new HashMap<>();
         encode(root, "", huffmanCode);
 
@@ -122,24 +122,6 @@ public class HT {
         return returnData;
     }
 
-    public static int decode(Node root, int index, StringBuilder sb) {
-        if (root == null) {
-            return index;
-        }
-
-        // Found a leaf node
-        if (root.isLeaf()) {
-            System.out.print("Decoded: " + root.getValue());
-            return index;
-        }
-
-        index++;
-
-        root = (sb.charAt(index) == '0') ? root.getLeft() : root.getRight();
-        index = decode(root, index, sb);
-        return index;
-    }
-
     //Finds the number of times the searchValue appears in the input and returns a HashMap
     //with searchValue and its respective frequency
     private static HashMap<Character, Integer> findFrequency(char searchValue, String input) {
@@ -172,50 +154,18 @@ public class HT {
         //Put all the characters in inputChars into the ArrayList (so they can be removed later)
         for (char c : inputChars) {
             chars.add(c);
-
-        }
-//
-//        for (int i = 0; i < inputChars.length; i++) {
-//            returnData.add(findFrequency(firstChar, value)); //Finds the frequency of the first character in chars
-//
-//            chars.removeAll(Collections.singleton(firstChar)); //Removes all occurrences of the first character in chars
-//
-//            //If the size is still greater than 0 then assign the first character to firstChar
-//            if (chars.size() > 0) {
-//                firstChar = chars.get(0);
-//            }
-//        }
-
-        for (int i = 0; i < value.length(); i++) {
-            if (returnData.isEmpty()) {
-                HashMap<Character, Integer> newMap = new HashMap<>();
-                newMap.put(value.charAt(i), 1);
-                returnData.add(newMap);
-            }
-            else {
-//                System.out.println(returnData);
-                for (int j = 0; j < returnData.size(); j++) {
-//                    System.out.println(returnData.get(j).get(value.charAt(i)));
-                    if (returnData.get(j).get(value.charAt(i)) != null) {
-                        Set<Character> keySet = returnData.get(j).keySet();
-                        Object[] keySetArray = keySet.toArray();
-
-//                        if ((Character) keySetArray[0] == value.charAt(i)) {
-                            int newFreq = returnData.get(j).get(value.charAt(i)) + 1;
-                            returnData.get(j).replace((Character) keySetArray[0], returnData.get(j).get(value.charAt(i)), newFreq);
-//                        }
-
-                    }
-//                    else {
-//                        HashMap<Character, Integer> newMap = new HashMap<>();
-//                        newMap.put(value.charAt(i), 1);
-//                        returnData.add(newMap);
-//                    }
-                }
-            }
         }
 
-        System.out.println(returnData);
+        while (!chars.isEmpty()) {
+            returnData.add(findFrequency(firstChar, value)); //Finds the frequency of the first character in chars
+
+            chars.removeAll(Collections.singleton(firstChar)); //Removes all occurrences of the first character in chars
+
+            //If the size is still greater than 0 then assign the first character to firstChar
+            if (chars.size() > 0) {
+                firstChar = chars.get(0);
+            }
+        }
 
         return returnData;
     }
@@ -238,11 +188,28 @@ public class HT {
         }
     }
 
-    public int compareStorage(String originalValue, String encodedValue) {
-        int returnData = 0;
+    public String compareStorage(String originalValue, String encodedValue) {
+        Double returnData = 0.00;
 
-        returnData = originalValue.getBytes().length;
+        int originalByteTotal = 0;
+        String pattern = "##.##";
+        DecimalFormat df = new DecimalFormat(pattern);
 
-        return returnData;
+        for (int i = 0; i < originalValue.getBytes().length; i++) {
+            int bytes = (int) originalValue.getBytes()[i];
+            originalByteTotal += bytes;
+        }
+
+        int encodedByteTotal = 0;
+
+        for (int i = 0; i < encodedValue.getBytes().length; i++) {
+            int bytes = (int) encodedValue.getBytes()[i];
+            encodedByteTotal += bytes;
+        }
+
+        returnData = (Math.abs(originalByteTotal - encodedByteTotal)/((originalByteTotal + encodedByteTotal) / 2.00)) * 100.00;
+
+
+        return df.format(returnData);
     }
 }
