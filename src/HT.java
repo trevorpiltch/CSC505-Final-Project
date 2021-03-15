@@ -1,5 +1,3 @@
-import java.lang.reflect.Array;
-import java.lang.reflect.GenericDeclaration;
 import java.util.*;
 
 
@@ -39,8 +37,6 @@ public class HT {
             queue.add(parent); //Add the parent node back to the tree
             root = parent;
         }
-
-//        root = queue.peek(); //Set the root to the only node in the queue
     }
 
     public String encode(String value) {
@@ -76,7 +72,7 @@ public class HT {
 
     public String decode(String decodeValue) {
         char[] encodedInputAsArray = decodeValue.toCharArray();
-        ArrayList<Character> encodedInputList = new ArrayList<>();
+        ArrayList<Character> encodedInputList = new ArrayList<Character>();
 
         String returnData = "";
         Node tempNode = root;
@@ -156,23 +152,53 @@ public class HT {
         char[] inputChars = value.toCharArray();
         char firstChar = inputChars[0];
 
-        int numDeleted = 0;
-
         //Put all the characters in inputChars into the ArrayList (so they can be removed later)
         for (char c : inputChars) {
             chars.add(c);
+
         }
+//
+//        for (int i = 0; i < inputChars.length; i++) {
+//            returnData.add(findFrequency(firstChar, value)); //Finds the frequency of the first character in chars
+//
+//            chars.removeAll(Collections.singleton(firstChar)); //Removes all occurrences of the first character in chars
+//
+//            //If the size is still greater than 0 then assign the first character to firstChar
+//            if (chars.size() > 0) {
+//                firstChar = chars.get(0);
+//            }
+//        }
 
-        while(!chars.isEmpty()) {
-            returnData.add(findFrequency(firstChar, value)); //Finds the frequency of the first character in chars
+        for (int i = 0; i < value.length(); i++) {
+            if (returnData.isEmpty()) {
+                HashMap<Character, Integer> newMap = new HashMap<>();
+                newMap.put(value.charAt(i), 1);
+                returnData.add(newMap);
+            }
+            else {
+//                System.out.println(returnData);
+                for (int j = 0; j < returnData.size(); j++) {
+//                    System.out.println(returnData.get(j).get(value.charAt(i)));
+                    if (returnData.get(j).get(value.charAt(i)) != null) {
+                        Set<Character> keySet = returnData.get(j).keySet();
+                        Object[] keySetArray = keySet.toArray();
 
-            chars.removeAll(Collections.singleton(firstChar)); //Removes all occurrences of the first character in chars
+//                        if ((Character) keySetArray[0] == value.charAt(i)) {
+                            int newFreq = returnData.get(j).get(value.charAt(i)) + 1;
+                            returnData.get(j).replace((Character) keySetArray[0], returnData.get(j).get(value.charAt(i)), newFreq);
+//                        }
 
-            //If the size is still greater than 0 then assign the first character to firstChar
-            if (chars.size() > 0) {
-                firstChar = chars.get(0);
+                    }
+//                    else {
+//                        HashMap<Character, Integer> newMap = new HashMap<>();
+//                        newMap.put(value.charAt(i), 1);
+//                        returnData.add(newMap);
+//                    }
+                }
             }
         }
+
+        System.out.println(returnData);
 
         return returnData;
     }
