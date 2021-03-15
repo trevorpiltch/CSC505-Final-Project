@@ -1,5 +1,3 @@
-import java.lang.reflect.Array;
-import java.lang.reflect.GenericDeclaration;
 import java.util.*;
 
 
@@ -54,7 +52,15 @@ public class HT {
             sb.append(huffmanCode.get(c));
         }
 
-        return ("The encoded string is:"+ sb);
+        return (""+sb);
+    }
+
+    public HashMap<Character, String> huffmanCode(String value){
+        HashMap<Character, String> huffmanCode = new HashMap<>();
+        encode(root, "", huffmanCode);
+
+        return huffmanCode;
+
     }
 
     //traverses the tree and then stores the codes in a map
