@@ -1,23 +1,21 @@
-import java.util.Comparator;
-
-class Node implements Comparable{
+class HTNode implements Comparable{
     private Character ch;
     private Integer freq;
-    private Node left = null, right = null;
+    private HTNode left = null, right = null;
 
-    public Node(Character ch, Integer freq) {
+    public HTNode(Character ch, Integer freq) {
         this.ch = ch;
         this.freq = freq;
     }
 
-    public Node(Character ch, Integer freq, Node left, Node right) {
+    public HTNode(Character ch, Integer freq, HTNode left, HTNode right) {
         this.ch = ch;
         this.freq = freq;
         this.left = left;
         this.right = right;
     }
 
-    public Node(Integer freq) {
+    public HTNode(Integer freq) {
         this.freq = freq;
     }
 
@@ -37,19 +35,19 @@ class Node implements Comparable{
         this.freq = frequency;
     }
 
-    public Node getLeft() {
+    public HTNode getLeft() {
         return left;
     }
 
-    public void setLeft(Node newNode) {
+    public void setLeft(HTNode newNode) {
         left = newNode;
     }
 
-    public Node getRight() {
+    public HTNode getRight() {
         return right;
     }
 
-    public void setRight(Node newNode) {
+    public void setRight(HTNode newNode) {
         right = newNode;
     }
 
@@ -59,9 +57,10 @@ class Node implements Comparable{
     }
 
 
+    //Overrided method of compareTo that returns the frequency of this node - the frequency of the given node (used for the priorityQueue in HT.buildTree())
     @Override
     public int compareTo(Object o) {
-        Node newNode = (Node) o;
+        HTNode newNode = (HTNode) o;
 
         return freq - newNode.getFrequency();
     }
