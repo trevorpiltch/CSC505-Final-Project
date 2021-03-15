@@ -43,9 +43,18 @@ public class HT {
 //        root = queue.peek(); //Set the root to the only node in the queue
     }
 
+
     public String encode(String value) {
-        HashMap<Character, String> map = new HashMap<>();
-        return encode(root, "", map);
+
+        HashMap<Character, String> huffmanCode = new HashMap<>();
+        encode(root, "", huffmanCode);
+
+        StringBuilder sb = new StringBuilder();
+        for (char c: value.toCharArray()) {
+            sb.append(huffmanCode.get(c));
+        }
+
+        return ("The encoded string is:"+ sb);
     }
 
     //traverses the tree and then stores the codes in a map
