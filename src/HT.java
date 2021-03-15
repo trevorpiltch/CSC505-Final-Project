@@ -39,9 +39,26 @@ public class HT {
         }
     }
 
+
     public String encode(String value) {
-        HashMap<Character, String> map = new HashMap<>();
-        return encode(root, "", map);
+
+        HashMap<Character, String> huffmanCode = new HashMap<>();
+        encode(root, "", huffmanCode);
+
+        StringBuilder sb = new StringBuilder();
+        for (char c: value.toCharArray()) {
+            sb.append(huffmanCode.get(c));
+        }
+
+        return (""+sb);
+    }
+
+    public HashMap<Character, String> huffmanCode(String value){
+        HashMap<Character, String> huffmanCode = new HashMap<>();
+        encode(root, "", huffmanCode);
+
+        return huffmanCode;
+
     }
 
     //traverses the tree and then stores the codes in a map
