@@ -1,12 +1,9 @@
-# CSC505-Final-Project
+# Final Project ReadME
 ## Description
-This project creates a tree based on the frequency of character in a string. The more frequent the character the closer it is to the root. The string is encoded into binary code (1’s and 0’s) that corresponds to 1: go right of node and 0: go left of node. We also included various methods which are listed with their functions below. This website ([https://people.ok.ubc.ca/ylucet/DS/Huffman.html], disclaimer this was NOT created by us, shows a visual representation of what the HuffmanTree is doing. 
+This project creates a tree based on the frequency of character in a string. The more frequent the character the closer it is to the root. The string is encoded into binary code (1’s and 0’s) that corresponds to 1: go right of node and 0: go left of node. We also included various methods which are listed with their functions below. This website ([https://people.ok.ubc.ca/ylucet/DS/Huffman.html], disclaimer that this was **NOT** created by us, shows a visual representation of what the HuffmanTree is doing. 
 
 ## Instructions
-To utilize this project, download the zip file and open the tester class. The other two classes (HTNode and HT) should not be modified. In the tester class you can modify the stri ng value to any string you want to encode using the HuffmanTree. There are is one exception from the binary search tree that logically make no sense here: 
-1. There cannot be less than one character inputed. This is because a tree with 0 or 1 character can not be encoded (there is no left or right) and thus cannot be utilized by the Huffman code compression. 
-2. The first two characters **CANNOT** be the same. This 
-Other than that, there are no other instructions. Be sure to only input a string and to view the difference between your original value and the HuffmanCode compressed string. 
+To utilize this project, download the zip file and open the tester class. The other two classes (HTNode and HT) should not be modified. In the tester class you can modify the string value to any string you want to encode using the HuffmanTree. Be sure that the value is only of type string and to view the difference between your original value and the HuffmanCode compressed string. 
 
 ## Methods
 ### Initializer
