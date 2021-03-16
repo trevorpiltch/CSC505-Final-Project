@@ -1,4 +1,5 @@
-# Trevor and Eric's CSC-505 Design Project
+# CSC-505 Design Project
+### Created by Trevor Piltch and Eric Zhang
 ## Description
 This project creates a tree based on the frequency of character in a string. The more frequent the character the closer it is to the root. The string is encoded into binary code (1’s and 0’s) that corresponds to 1: go right of node and 0: go left of node. We also included various methods which are listed with their functions below. This website ([https://people.ok.ubc.ca/ylucet/DS/Huffman.html], disclaimer that this was **NOT** created by us, shows a visual representation of what the HuffmanTree is doing. 
 
